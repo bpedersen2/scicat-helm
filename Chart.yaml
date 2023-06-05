@@ -1,0 +1,9 @@
+apiVersion: v2
+name: scicat
+description: A Helm chart for SciCat
+
+type: application
+
+version: 0.1.0
+
+appVersion: "4.0.0"

@@ -1,0 +1,24 @@
+{{- if  .Values.backend.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    {{- include "scicat.labels" . | nindent 4 }}
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: {{ .Values.backend.service.name }}
+      port: {{ .Values.backend.service.port }}
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    {{- include "scicat.selectorLabels" . | nindent 4 }}
+    scicat/approle: "backend"
+  sessionAffinity: None
+  type: {{ .Values.frontend.service.type }}
+{{- end }}

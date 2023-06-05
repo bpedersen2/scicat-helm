@@ -1,0 +1,26 @@
+{{- if .Values.frontend.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: scicat-dev
+  labels:
+    scicat/approle: "frontend"
+    {{- include "scicat.labels" . | nindent 4 }}
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: {{ .Values.frontend.service.name }}
+      port: {{ .Values.frontend.service.port }}
+      protocol: TCP
+      targetPort: 80
+  selector:
+    {{- include "scicat.selectorLabels" . | nindent 4 }}
+    scicat/approle: "frontend"
+  sessionAffinity: None
+  type: {{ .Values.frontend.service.type }}
+
+{{- end }}
