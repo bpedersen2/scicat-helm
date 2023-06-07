@@ -1,0 +1,10 @@
+Scicat Helm Chart
+
+The helm chart does not yet setup the backing mongodb or queuing systems. These need to be installed separatly
+(recommendation: use the bitnami charts for qucik and easy setup)
+
+
+Create a secret 'backend-conf' setting all the needed env vars for backend configuration.
+Create a secret 'frontend-conf' with key 'frontend.config.json' and the frontend config json as value.
+
+Adjust the values file for your ingress needs.
