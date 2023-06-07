@@ -17,7 +17,7 @@ spec:
       targetPort: 3000
   selector:
     {{- include "scicat.selectorLabels" . | nindent 4 }}
-    scicat/approle: "downloader"
+    app.kubernetes.io/component: "downloader"
   sessionAffinity: None
   type: {{ .Values.frontend.service.type }}
 

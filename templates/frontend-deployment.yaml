@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    scicat/approle: "frontend"
+    app.kubernetes.io/component: "frontend"
     {{- include "scicat.labels" . | nindent 4 }}
   name: frontend
 spec:
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
       matchLabels:
-        scicat/approle: "frontend"
+        app.kubernetes.io/component: "frontend"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
   strategy:
       rollingUpdate:
@@ -23,7 +23,7 @@ spec:
       annotations:
       creationTimestamp: null
       labels:
-        scicat/approle: "frontend"
+        app.kubernetes.io/component: "frontend"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.imagePullSecrets }}

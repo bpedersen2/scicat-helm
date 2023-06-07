@@ -5,7 +5,7 @@ metadata:
   name: frontend
   namespace: scicat-dev
   labels:
-    scicat/approle: "frontend"
+    app.kubernetes.io/component: "frontend"
     {{- include "scicat.labels" . | nindent 4 }}
 spec:
   internalTrafficPolicy: Cluster
@@ -19,7 +19,7 @@ spec:
       targetPort: 80
   selector:
     {{- include "scicat.selectorLabels" . | nindent 4 }}
-    scicat/approle: "frontend"
+    app.kubernetes.io/component: "frontend"
   sessionAffinity: None
   type: {{ .Values.frontend.service.type }}
 

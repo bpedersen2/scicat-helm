@@ -18,7 +18,7 @@ spec:
       targetPort: 3000
   selector:
     {{- include "scicat.selectorLabels" . | nindent 4 }}
-    scicat/approle: "backend"
+    app.kubernetes.io/component: "backend"
   sessionAffinity: None
   type: {{ .Values.frontend.service.type }}
 {{- end }}

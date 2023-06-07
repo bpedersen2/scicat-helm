@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    scicat/approle: "backend"
+    app.kubernetes.io/component: "backend"
     {{- include "scicat.labels" . | nindent 4 }}
   name: backend
 spec:
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      scicat/approle: "backend"
+      app.kubernetes.io/component: "backend"
       {{- include "scicat.selectorLabels" . | nindent 6 }}
   strategy:
     rollingUpdate:
@@ -22,7 +22,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        scicat/approle: "backend"
+        app.kubernetes.io/component: "backend"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
       namespace: scicat-dev
     spec:

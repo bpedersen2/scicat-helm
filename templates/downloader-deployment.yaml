@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
   labels:
-    scicat/approle: "downloader"
+    app.kubernetes.io/component: "downloader"
     {{- include "scicat.labels" . | nindent 4 }}
   name: downloader
 spec:
@@ -12,7 +12,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      scicat/approle: "downloader"
+      app.kubernetes.io/component: "downloader"
       {{- include "scicat.selectorLabels" . | nindent 6 }}
   strategy:
     rollingUpdate:
@@ -24,7 +24,7 @@ spec:
       annotations:
       creationTimestamp: null
       labels:
-        scicat/approle: "downloader"
+        app.kubernetes.io/component: "downloader"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
       namespace: scicat-dev
     spec:
