@@ -1,10 +1,10 @@
-{{- if  .Values.backend.enabled }}
-
+{{- if .Values.panoscapi.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: panoscapi
   labels:
+    app.kubernetes.io/component: "panoscapi"
     {{- include "scicat.labels" . | nindent 4 }}
 spec:
   internalTrafficPolicy: Cluster
@@ -12,13 +12,14 @@ spec:
     - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-    - name: {{ .Values.backend.service.name }}
-      port: {{ .Values.backend.service.port }}
+    - name: {{ .Values.panoscapi.service.name }}
+      port: {{ .Values.panoscapi.service.port }}
       protocol: TCP
-      targetPort: 3000
+      targetPort: 80
   selector:
     {{- include "scicat.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: "backend"
+    app.kubernetes.io/component: "panoscapi"
   sessionAffinity: None
-  type: {{ .Values.backend.service.type }}
+  type: {{ .Values.panoscapi.service.type }}
+
 {{- end }}
