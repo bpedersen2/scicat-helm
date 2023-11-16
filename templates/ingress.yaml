@@ -88,8 +88,36 @@ spec:
             path: /zip
             pathType: Prefix
         {{- end}}
+        {{- if $.Values.panoscapi.enabled }}
+          - backend:
+              service:
+                name: {{ $.Values.panoscapi.service.name }}
+                port:
+                  number: {{ $.Values.panoscapi.service.port }}
+            path: /panoscsearch/
+            pathType: Prefix
+          - backend:
+              service:
+                name: {{ $.Values.panoscapi.service.name }}
+                port:
+                  number: {{ $.Values.panoscapi.service.port }}
+            path: /panoscsearch/explorer/
+            pathType: Prefix
+        {{- end}}
     {{- if .paths }}
     {{- toYaml .paths | nindent 6 }}
     {{- end}}
     {{- end }}
+    {{- if .Values.landingpage.enabled -}}
+    - host: {{.Values.landingpage.ingress.host }}
+      http:
+        paths:
+        - backend:
+            service:
+              name: {{ $.Values.landingpage.service.name }}
+                port:
+                  number: {{ $.Values.landingpage.service.port }}
+            path: /
+            pathType: Prefix
+    {{- end -}}
 {{- end }}

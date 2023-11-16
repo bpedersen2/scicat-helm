@@ -1,18 +1,18 @@
-{{- if .Values.frontend.enabled }}
+{{- if  .Values.panoscapi.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/component: "frontend"
+    app.kubernetes.io/component: "panoscapi"
     {{- include "scicat.labels" . | nindent 4 }}
-  name: frontend
+  name: panoscapi
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
       matchLabels:
-        app.kubernetes.io/component: "frontend"
+        app.kubernetes.io/component: "panoscapi"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
   strategy:
       rollingUpdate:
@@ -24,7 +24,7 @@ spec:
       annotations:
       creationTimestamp: null
       labels:
-        app.kubernetes.io/component: "frontend"
+        app.kubernetes.io/component: "panoscapi"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
@@ -33,9 +33,9 @@ spec:
       {{- end }}
       affinity: {}
       containers:
-        - image: {{ .Values.frontend.image | default "scicatfrontend" | quote }}
+        - image: {{ .Values.panoscapi.image | default "scicatpanoscapi" | quote }}
           imagePullPolicy: Always
-          name: frontend
+          name: panoscapi
           ports:
             - containerPort: 80
               name: http
@@ -43,21 +43,13 @@ spec:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          volumeMounts:
-            - mountPath: /usr/share/nginx/html/assets/config.json
-              name: frontendconfig
-              readOnly: true
-              subPath: frontend.config.json
+          envFrom:
+            - secretRef:
+                name: panosc-api-config
+                optional: false
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-      volumes:
-        - name: frontendconfig
-          secret:
-            defaultMode: 420
-            optional: true
-            secretName: frontend-conf
-
 {{- end -}}

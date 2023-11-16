@@ -1,18 +1,18 @@
-{{- if .Values.frontend.enabled }}
+{{- if  .Values.landingpage.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/component: "frontend"
+    app.kubernetes.io/component: "landingpage"
     {{- include "scicat.labels" . | nindent 4 }}
-  name: frontend
+  name: landingpage
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
       matchLabels:
-        app.kubernetes.io/component: "frontend"
+        app.kubernetes.io/component: "landingpage"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
   strategy:
       rollingUpdate:
@@ -24,7 +24,7 @@ spec:
       annotations:
       creationTimestamp: null
       labels:
-        app.kubernetes.io/component: "frontend"
+        app.kubernetes.io/component: "landingpage"
         {{- include "scicat.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
@@ -33,9 +33,9 @@ spec:
       {{- end }}
       affinity: {}
       containers:
-        - image: {{ .Values.frontend.image | default "scicatfrontend" | quote }}
+        - image: {{ .Values.landingpage.image | default "scicatlandingpage" | quote }}
           imagePullPolicy: Always
-          name: frontend
+          name: landingpage
           ports:
             - containerPort: 80
               name: http
@@ -45,19 +45,19 @@ spec:
           terminationMessagePolicy: File
           volumeMounts:
             - mountPath: /usr/share/nginx/html/assets/config.json
-              name: frontendconfig
+              name: landingpageconfig
               readOnly: true
-              subPath: frontend.config.json
+              subPath: landingpage.config.json
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-        - name: frontendconfig
+        - name: landingpageconfig
           secret:
             defaultMode: 420
             optional: true
-            secretName: frontend-conf
+            secretName: landingpage-conf
 
 {{- end -}}

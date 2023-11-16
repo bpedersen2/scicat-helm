@@ -4,6 +4,7 @@ description: A Helm chart for SciCat
 
 type: application
 
-version: 0.1.0
+version: 0.2.0
 
-appVersion: "4.0.0"
+appVersion: "4.4.0"
+icon: https://avatars.githubusercontent.com/u/32574944?s=200&v=4

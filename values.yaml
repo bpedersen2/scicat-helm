@@ -71,6 +71,23 @@ downloader:
       port: 3000
       type: ClusterIP
 
+landingpage:
+  enabled: true
+  image: null
+  ingress:
+    host: null
+    tls: []
+  service:
+      name: landingpage
+      port: 80
+      type: ClusterIP
 
+panoscapi:
+  enabled: true
+  image: null
+  service:
+      name: panoscapi
+      port: 3000
+      type: ClusterIP
 
 
